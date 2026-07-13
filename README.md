@@ -17,17 +17,52 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
+Real recommendation systems, like Spotify or YouTube, mostly rely on two approaches: collaborative filtering (looking at what similar users listened to) and content-based filtering (looking at the actual attributes of the content itself). My design uses only the second one. It doesn't look at other users at all, just compares a song's own attributes against what one user says they like.
 
-Some prompts to answer:
+**What features does each `Song` use in your system**
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+Every song in the dataset carries a full profile: title, artist, genre, mood, energy, tempo, valence, danceability, and acousticness. The scoring rule is only meant to use four of those attributes, genre, mood, energy, and acousticness, since those are the only four things `UserProfile` states a preference for. Tempo, valence, and danceability stay part of the dataset (they add richness and make the songs feel more real), but the plan is to leave them out of the scoring math. I looked into using valence early on since it lines up with the arousal-valence model of mood, but decided it would be redundant with the mood field for a system this simple.
 
-You can include a simple diagram or bullet list if helpful.
+**What information does your `UserProfile` store**
+
+A user profile stores four preferences: `favorite_genre`, `favorite_mood`, `target_energy`, and `likes_acoustic`. That's it, no listening history, no likes/skips, just a snapshot of what someone says they want right now.
+
+**How does your `Recommender` compute a score for each song**
+
+Each song is meant to be scored against those four preferences using this Algorithm Recipe:
+
+- **+2.0** if the song's genre matches the user's favorite genre
+- **+1.0** if the song's mood matches the user's favorite mood
+- **Up to +2.0** for energy, based on how close the song's energy is to the user's target, the formula is `(1 - |target_energy - song_energy|) * 2.0`, so a perfect match scores the full 2.0, and the score drops the further apart they are
+- **+0.5** if the song's acousticness lines up with whether the user likes acoustic music
+
+That puts the max possible score at 5.5 if a song matches on everything.
+
+I chose to weight genre higher than mood on purpose, it's the starting point my project instructions suggested, and I want to test it as my baseline before trying anything else. I got a good argument from Claude that mood should count for more, since mood reflects what you want right now while genre is more of a general taste. That's a fair point, but I don't have any real data to back it up yet, so I'm saving that idea to test later as an actual experiment instead of just taking the AI's word for it.
+
+**How do you choose which songs to recommend**
+
+Once every song in the catalog has a score, the plan is to sort them from highest to lowest and take the top `k`, usually the top 5. The scoring rule judges one song at a time; the ranking rule is what turns all those individual judgments into an actual ordered list. One thing worth noting: since genre and energy carry the biggest weights, this design will lean harder on those than on mood, which could make recommendations feel a bit "safe" (same genre showing up again and again) rather than actually matching the mood someone's in right now.
+
+**Pipeline at a glance**
+
+```
+UserProfile
+  (favorite_genre, favorite_mood, target_energy, likes_acoustic)
+        │
+        ▼
+Score each Song against the profile
+  genre match      → +2.0
+  mood match       → +1.0
+  energy closeness → up to +2.0
+  acoustic match    → +0.5
+        │
+        ▼
+Sort all songs by score, high → low
+        │
+        ▼
+Take the top k  →  recommendation list
+```
 
 ---
 
@@ -41,6 +76,8 @@ You can include a simple diagram or bullet list if helpful.
    python -m venv .venv
    source .venv/bin/activate      # Mac or Linux
    .venv\Scripts\activate         # Windows
+
+   ```
 
 2. Install dependencies
 
@@ -79,7 +116,7 @@ Paste a sample of your recommender's output here as a text block so a reader can
 #   3. ...
 ```
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
+**Screenshot or video** _(optional)_: <!-- Insert a screenshot or demo video link here -->
 
 ---
 
@@ -117,6 +154,3 @@ Write 1 to 2 paragraphs here about what you learned:
 
 - about how recommenders turn data into predictions
 - about where bias or unfairness could show up in systems like this
-
-
-
