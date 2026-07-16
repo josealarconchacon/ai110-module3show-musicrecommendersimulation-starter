@@ -44,6 +44,19 @@ I chose to weight genre higher than mood on purpose, it's the starting point my 
 
 Once every song in the catalog has a score, the plan is to sort them from highest to lowest and take the top `k`, usually the top 5. The scoring rule judges one song at a time; the ranking rule is what turns all those individual judgments into an actual ordered list. One thing worth noting: since genre and energy carry the biggest weights, this design will lean harder on those than on mood, which could make recommendations feel a bit "safe" (same genre showing up again and again) rather than actually matching the mood someone's in right now.
 
+**Expected bias:** Because energy is weighted equal to genre (both up to 2.0 points), the system will likely favor loud songs regardless of genre almost as much as it favors true genre matches. I tested this with a rock/intense profile and found that high-energy songs from unrelated genres (metal, pop, hip hop) scored 2.4–3.5, while the actual genre match scored 5.48, a real gap, but one that could shrink if my rock catalog stays small.
+
+```python
+UserProfile(
+    favorite_genre="rock",
+    favorite_mood="intense",
+    target_energy=0.9,
+    likes_acoustic=False,
+)
+```
+
+In other words, the system may end up recommending loud music more than your genre, especially in categories with few songs.
+
 **Pipeline at a glance**
 
 ```
