@@ -21,29 +21,32 @@ Prompts:
 
 ## 3. How the Model Works
 
-Explain your scoring approach in simple language.
+Every song gets compared against what one person says they like, there's no "other users" involved at all, it's just this one profile against every song in the catalog.
 
-Prompts:
+A user profile is four things: their favorite genre, their favorite mood, how much energy they want (on a 0 to 1 scale), and whether they like acoustic music or not.
 
-- What features of each song are used (genre, energy, mood, etc.)
-- What user preferences are considered
-- How does the model turn those into a score
-- What changes did you make from the starter logic
+Each song gets a score built from four rules:
 
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+- If the song's genre matches the user's favorite genre, that's +2.0 points.
+- If the song's mood matches the user's favorite mood, that's +1.0 point.
+- Energy works differently, it's not just yes or no, it's how close the song's energy is to what the user asked for. A perfect match gets up to +2.0, and it gets smaller the further apart they are.
+- If the song's acousticness lines up with whether the user likes acoustic music, that's +0.5.
+
+Add all four up and that's the song's total score, out of a possible 5.5 if it hits everything perfectly. Every song in the catalog gets scored this way, then they're sorted highest to lowest, and the top 5 get shown as the recommendations.
+
+I started with genre worth more than mood, and I wanted to test that before changing anything. I also thought about scoring on valence, danceability, and tempo too, but decided against it, those three stay in the dataset but don't affect the score, since I wanted to keep things simple and only score on the four things the user actually says they want.
 
 ---
 
 ## 4. Data
 
-Describe the dataset the model uses.
+My catalog has 18 songs total, I started with 10 and added 8 more later to get more variety. Each song has genre, mood, energy, tempo, valence, danceability, and acousticness, but I only score on four of those: genre, mood, energy, and acousticness.
 
-Prompts:
+Genre-wise it's pretty spread out, 15 different genres across 18 songs (pop, lofi, rock, ambient, jazz, synthwave, indie pop, classical, hip hop, r&b, folk, electronic, ambient pop, metal, country). Only lofi has more than one song in most cases, it's got three (Midnight Coding, Library Rain, Focus Flow). Everything else is basically a single song representing that whole genre.
 
-- How many songs are in the catalog
-- What genres or moods are represented
-- Did you add or remove data
-- Are there parts of musical taste missing in the dataset
+Moods are similar, chill shows up the most (three songs), everything else is one or two songs at most.
+
+I didn't remove any of the original data, I only added to it. What's missing is any real depth per genre, since almost every genre only has one song, there's no way to recommend "more like this" within that genre if the one song doesn't happen to also match on mood or energy. There's also no lyrics, no artist history, no listening behavior, this is purely based on the attributes tagged to each song.
 
 ---
 
