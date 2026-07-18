@@ -2,20 +2,23 @@
 
 ## 1. Model Name
 
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**
+**Vibra**
 
 ---
 
 ## 2. Intended Use
 
-Describe what your recommender is designed to do and who it is for.
+**What kind of recommendations does it generate**
 
-Prompts:
+It takes a person's stated taste (favorite genre, favorite mood, target energy, and whether they like acoustic music) and scores every song in the catalog against that, then hands back the top 5. It's not predicting anything, it's just measuring how close each song is to what you already said you wanted.
 
-- What kind of recommendations does it generate
-- What assumptions does it make about the user
-- Is this for real users or classroom exploration
+**What assumptions does it make about the user**
+
+It assumes the user actually knows and can state their preferences upfront, there's no listening history or behavior involved, just whatever four values you give it. It also assumes those preferences map cleanly onto the exact genre and mood strings in my catalog, which, as I found out, doesn't always hold up.
+
+**Is this for real users or classroom exploration**
+
+This is a classroom exploration project, not something built for real users. With only 18 songs and known issues like silent failures on genres that don't exist, I wouldn't hand this to an actual person expecting real music recommendations.
 
 ---
 
@@ -52,13 +55,17 @@ I didn't remove any of the original data, I only added to it. What's missing is 
 
 ## 5. Strengths
 
-Where does your system seem to work well
+**User types for which it gives reasonable results**
 
-Prompts:
+Users whose taste maps cleanly onto an actual genre/mood combo in my catalog get solid results, High-Energy Pop and Chill Lofi both came back with lists that felt right to me. Deep Intense Rock was probably the cleanest case, Storm Runner hit genre, mood, and energy all at once and won by a wide margin, exactly what I'd expect.
 
-- User types for which it gives reasonable results
-- Any patterns you think your scoring captures correctly
-- Cases where the recommendations matched your intuition
+**Any patterns you think your scoring captures correctly**
+
+The energy formula seems to genuinely work in both directions, not just favor "loud" songs. High-Energy Pop and Chill Lofi asked for almost opposite energy levels and got completely different top 5 lists with zero overlap.
+
+**Cases where the recommendations matched your intuition**
+
+The Chill Lofi results matched my intuition the most, Library Rain and Midnight Coding topping the list is exactly what I'd expect from someone who wants mellow, low-key music. Nothing in that top 5 felt like it snuck in for the wrong reason either, even the lower-scoring songs still sounded like they belonged on a chill playlist.
 
 ---
 
@@ -311,23 +318,34 @@ Honestly, just different, not clearly more accurate. Nothing in my actual catalo
 
 ## 8. Future Work
 
-Ideas for how you would improve the model next.
+**Additional features or preferences**
 
-Prompts:
+I'd actually start using valence, danceability, and tempo instead of just letting them sit unused in the dataset, since they're already there and could add real signal. I'd also want some kind of fuzzy genre matching so "indie pop" and "pop" don't score as a total mismatch just because the strings aren't identical.
 
-- Additional features or preferences
-- Better ways to explain recommendations
-- Improving diversity among the top results
-- Handling more complex user tastes
+**Better ways to explain recommendations**
+
+I'd want the system to flag when a user's requested genre or mood doesn't exist in the catalog at all, instead of silently falling back to energy and acousticness with no warning. Right now a "genre doesn't exist" result looks identical to a "genre exists but scored low" result, and that's genuinely confusing from the outside.
+
+**Improving diversity among the top results**
+
+With 12 of my 14 genres having exactly one song, there's basically no alternative to offer once you're even slightly outside that one song's best-fit profile. I'd want a bigger, more evenly distributed catalog so users who like less common genres get real options instead of just whatever's closest on energy.
+
+**Handling more complex user tastes**
+
+Right now a user can only state one genre and one mood, so someone who likes "either rock or electronic" has no way to express that. I'd want to support multiple acceptable values per preference, so the system isn't forcing every user into a single narrow lane.
 
 ---
 
 ## 9. Personal Reflection
 
-A few sentences about your experience.
+**What you learned about recommender systems**
 
-Prompts:
+I learned that a recommender doesn't need anything fancy to feel legitimate, mine is just addition and sorting, but it still produces results that look and feel like real recommendations. I also learned how much a system's behavior depends on the shape of its data, not just its math, the scoring logic never changed, but the results were only as good as how evenly my catalog covered different genres and moods.
 
-- What you learned about recommender systems
-- Something unexpected or interesting you discovered
-- How this changed the way you think about music recommendation apps
+**Something unexpected or interesting you discovered**
+
+The most interesting thing was proving, with actual numbers, that a song with zero genre match could mathematically outrank a true genre match, that wasn't something I guessed at, I built the scoring recipe and it still had a real blind spot I didn't see coming until I tested it. I also didn't expect how confidently the system would fail, when I asked for a genre and mood that don't exist anywhere in my catalog, it never told me that, it just quietly handed back 5 ranked songs like nothing was wrong.
+
+**How this changed the way you think about music recommendation apps**
+
+It made me a lot more suspicious of confident-looking recommendations from real apps, if my tiny 18-song system can silently fail and still look convincing, I have to assume bigger systems have their own invisible blind spots too. It also made me appreciate that a recommendation isn't really "correct" or "incorrect," it's just a reflection of whatever the underlying data and scoring rules happen to reward.

@@ -196,7 +196,8 @@ Read and complete `model_card.md`:
 
 [**Model Card**](model_card.md)
 
-Write 1 to 2 paragraphs here about what you learned:
+Building this taught me that turning data into predictions is really just turning data into comparisons. My recommender doesn't "know" anything about music, it just takes whatever four values a user gives it (genre, mood, energy, acoustic preference) and checks each song against those same four values, adding up points for whatever lines up. There's no learning, no history, no understanding of the music itself, it's addition and sorting. But when I ran it against profiles like Chill Lofi, the output still felt like a real recommendation, which honestly surprised me more than I expected it to.
 
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
+The bias and unfairness part showed up in ways I didn't fully predict going in. My catalog has 12 out of 14 genres represented by exactly one song, so a user who likes lofi (three songs) gets a much better experience than someone who likes classical or metal (one song each), not because the scoring math treats them differently, but because the data itself isn't evenly distributed. I also proved that a song with zero genre match can mathematically outrank a true genre match, and that the system never tells a user when their requested genre or mood doesn't exist in the catalog at all, it just quietly falls back to whatever signal is left and still looks confident.
+
+AI tools helped most with turning my scoring recipe into actual working code quickly, once I had a specific plan, it could implement it fast. But I had to double-check its reasoning constantly, not its code. The clearest example was when Claude argued that mood should count for more than genre in my scoring weights, a reasonable argument, but I had no real data to back it up, so I saved it as something to test later instead of just accepting it. A similar thing happened when AI claimed there was an energy 'gap' around target_energy=0.6 in my catalog, and when I checked my actual songs.csv, Sunday Backroad sits at 0.58, basically a perfect match, so that claim turned out to be wrong. Both cases taught me that AI reasoning about my own data needs to be checked against the actual data, not trusted just because it sounds confident.
