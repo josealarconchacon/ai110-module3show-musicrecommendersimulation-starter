@@ -155,6 +155,27 @@ Use this section to document the experiments you ran. For example:
 
 ---
 
+**What I actually tested:** I changed genre match from +2.0 to +1.0 (a halving, close to the template's 2.0 -> 0.5 example) and doubled the max energy contribution from +2.0 to +4.0 (formula: `(1 - abs(target_energy - song_energy)) * 4.0`). Mood (+1.0) and acoustic (+0.5) stayed the same. New max possible score: 6.5.
+
+I didn't test adding tempo or valence to the score. I chose the weight shift instead because I'd already found that with my original weights, a song with zero genre match could mathematically outscore a true genre match, so I wanted to see if making energy even stronger would surface that problem in real test data, not just in a hypothetical.
+
+**How the system behaved for different types of users (before vs. after):**
+
+```
+=== Deep Intense Rock (before → after) ===
+Storm Runner:  5.48 → 6.46
+Gym Hero:      3.44 → 5.38
+Gap:           2.04 → 1.08
+```
+
+Storm Runner still won, but its lead over Gym Hero (a pop song with no genre match) shrank by almost half. I checked all 6 of my test profiles, no song actually flipped rank anywhere, the genre-matched song still came out on top every time, just by a smaller margin.
+
+**Was this more accurate, or just different?**
+
+Honestly, just different, not clearly more accurate. Nothing in my actual catalog flipped rank, so on the surface it looks like a safe change. But the math says the underlying risk got worse, not better; the theoretical case where a wrong-genre song beats a true genre match (my classical/happy example) would now have an even bigger gap in the wrong song's favor, since energy is worth twice as much.
+
+---
+
 ## Limitations and Risks
 
 Summarize some limitations of your recommender.
