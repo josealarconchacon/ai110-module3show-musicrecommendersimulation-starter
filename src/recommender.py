@@ -89,6 +89,22 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     return (total_score, reasons)
 
 def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
-    """Scores every song against user preferences and returns the top k, sorted highest first."""
-    scored = [(song, *score_song(user_prefs, song)) for song in songs]
-    return sorted(scored, key=lambda result: result[1], reverse=True)[:k]
+    """Scores every song against user preferences and picks the top k one at a time,
+    applying a diversity penalty to remaining songs whose artist is already represented."""
+    candidates = [[song, *score_song(user_prefs, song), False] for song in songs]
+    results = []
+    chosen_artists = set()
+
+    while candidates and len(results) < k:
+        candidates.sort(key=lambda candidate: candidate[1], reverse=True)
+        song, score, reasons, _penalized = candidates.pop(0)
+        results.append((song, score, reasons))
+        chosen_artists.add(song["artist"])
+
+        for candidate in candidates:
+            if not candidate[3] and candidate[0]["artist"] in chosen_artists:
+                candidate[1] -= 1.0
+                candidate[2].append("diversity penalty (-1.0)")
+                candidate[3] = True
+
+    return results

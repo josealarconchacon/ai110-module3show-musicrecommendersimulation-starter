@@ -9,6 +9,8 @@ You will implement the functions in recommender.py:
 - recommend_songs
 """
 
+from tabulate import tabulate
+
 from src.recommender import load_songs, recommend_songs
 
 
@@ -67,6 +69,20 @@ def main() -> None:
             print(f"{song['title']} - Score: {score:.2f}")
             print(f"Because: {', '.join(reasons)}")
             print()
+
+        table_rows = [
+            [song["title"], round(score, 2), ", ".join(reasons)]
+            for song, score, reasons in recommendations
+        ]
+        print(
+            tabulate(
+                table_rows,
+                headers=["Title", "Score", "Reasons"],
+                tablefmt="grid",
+                maxcolwidths=[20, None, 50],
+            )
+        )
+        print()
 
 
 if __name__ == "__main__":
