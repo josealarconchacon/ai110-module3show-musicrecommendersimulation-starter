@@ -138,105 +138,130 @@ Because: energy closeness (+1.96), acousticness match (+0.5)
 
 This one looked right — high-energy, upbeat songs at the top, genre and mood matches driving the highest scores.
 
-### Chill Lofi
+### Chill Lofi (mood-first)
 
 ```
-=== Chill Lofi ===
+=== Chill Lofi (mood-first) ===
 
 Top recommendations:
 
-Library Rain - Score: 5.50
-Because: genre match (+2.0), mood match (+1.0), energy closeness (+2.00), acousticness match (+0.5)
+Library Rain - Score: 5.00
+Because: genre match (+1.00), mood match (+2.50), energy closeness (+1.00), acousticness match (+0.50)
 
-Midnight Coding - Score: 5.36
-Because: genre match (+2.0), mood match (+1.0), energy closeness (+1.86), acousticness match (+0.5)
+Midnight Coding - Score: 4.93
+Because: genre match (+1.00), mood match (+2.50), energy closeness (+0.93), acousticness match (+0.50)
 
-Focus Flow - Score: 4.40
-Because: genre match (+2.0), energy closeness (+1.90), acousticness match (+0.5)
+Spacewalk Thoughts - Score: 3.93
+Because: mood match (+2.50), energy closeness (+0.93), acousticness match (+0.50)
 
-Spacewalk Thoughts - Score: 3.36
-Because: mood match (+1.0), energy closeness (+1.86), acousticness match (+0.5)
+Coffee Shop Stories - Score: 1.48
+Because: energy closeness (+0.98), acousticness match (+0.50)
 
-Coffee Shop Stories - Score: 2.46
-Because: energy closeness (+1.96), acousticness match (+0.5)
+Old Porch Stories - Score: 1.47
+Because: energy closeness (+0.97), acousticness match (+0.50)
 ```
 
 Also matched my intuition — mellow, low-energy tracks up top, acoustic bonus applied consistently.
 
-### Deep Intense Rock
+### Deep Intense Rock (energy-focused)
 
 ```
-=== Deep Intense Rock ===
+=== Deep Intense Rock (energy-focused) ===
 
 Top recommendations:
 
-Storm Runner - Score: 5.48
-Because: genre match (+2.0), mood match (+1.0), energy closeness (+1.98), acousticness match (+0.5)
+Storm Runner - Score: 5.96
+Because: genre match (+1.00), mood match (+1.00), energy closeness (+3.46), acousticness match (+0.50)
 
-Gym Hero - Score: 3.44
-Because: mood match (+1.0), energy closeness (+1.94), acousticness match (+0.5)
+Gym Hero - Score: 4.89
+Because: mood match (+1.00), energy closeness (+3.40), acousticness match (+0.50)
 
-Block Party Anthem - Score: 2.46
-Because: energy closeness (+1.96), acousticness match (+0.5)
+Block Party Anthem - Score: 3.93
+Because: energy closeness (+3.43), acousticness match (+0.50)
 
-Neon Horizon - Score: 2.42
-Because: energy closeness (+1.92), acousticness match (+0.5)
+Neon Horizon - Score: 3.86
+Because: energy closeness (+3.36), acousticness match (+0.50)
 
-Broken Amplifier - Score: 2.40
-Because: energy closeness (+1.90), acousticness match (+0.5)
+Broken Amplifier - Score: 3.83
+Because: energy closeness (+3.33), acousticness match (+0.50)
 ```
 
 Straightforward — the top pick nails genre, mood, and energy all at once.
 
-### Sad Rave (adversarial — contradictory preferences)
+### Sad Rave (energy-focused, adversarial — contradictory preferences)
 
 ```
-=== Sad Rave ===
+=== Sad Rave (energy-focused) ===
 
 Top recommendations:
 
-Broken Amplifier - Score: 4.00
-Because: genre match (+2.0), energy closeness (+2.00)
+Broken Amplifier - Score: 4.50
+Because: genre match (+1.00), energy closeness (+3.50)
 
-Autumn Piano Sketch - Score: 2.10
-Because: mood match (+1.0), energy closeness (+0.60), acousticness match (+0.5)
+Gym Hero - Score: 3.43
+Because: energy closeness (+3.43)
 
-Gym Hero - Score: 1.96
-Because: energy closeness (+1.96)
+Storm Runner - Score: 3.36
+Because: energy closeness (+3.36)
 
-Storm Runner - Score: 1.92
-Because: energy closeness (+1.92)
+Block Party Anthem - Score: 3.26
+Because: energy closeness (+3.26)
 
-Block Party Anthem - Score: 1.86
-Because: energy closeness (+1.86)
+Neon Horizon - Score: 3.19
+Because: energy closeness (+3.19)
 ```
 
 This is the profile I built to be internally contradictory (high-energy metal, but melancholic and acoustic-loving), and it didn't break anything. It just fell back to whatever criteria still lined up for each song, no crash, no invalid scores, just a genre match here, an energy match there.
 
-### Genre/Mood Ghost (adversarial — genre/mood not in catalog)
+### Genre/Mood Ghost (mood-first, adversarial — genre/mood not in catalog)
 
 ```
-=== Genre/Mood Ghost ===
+=== Genre/Mood Ghost (mood-first) ===
+
+Top recommendations:
+
+Night Drive Loop - Score: 1.35
+Because: energy closeness (+0.85), acousticness match (+0.50)
+
+Rooftop Lights - Score: 1.34
+Because: energy closeness (+0.84), acousticness match (+0.50)
+
+Neon Horizon - Score: 1.24
+Because: energy closeness (+0.74), acousticness match (+0.50)
+
+Block Party Anthem - Score: 1.22
+Because: energy closeness (+0.72), acousticness match (+0.50)
+
+Storm Runner - Score: 1.19
+Because: energy closeness (+0.69), acousticness match (+0.50)
+```
+
+I asked for `reggae` and `euphoric`, neither of which exist anywhere in my catalog. The system didn't error out or flag anything, it just quietly dropped the genre and mood bonuses and ranked everything on energy and acousticness alone, still confidently returning 5 songs like nothing was wrong.
+
+### Genre/Mood Ghost (default) — added for isolated comparison
+
+```
+=== Genre/Mood Ghost (default) ===
 
 Top recommendations:
 
 Night Drive Loop - Score: 2.20
-Because: energy closeness (+1.70), acousticness match (+0.5)
+Because: energy closeness (+1.70), acousticness match (+0.50)
 
 Rooftop Lights - Score: 2.18
-Because: energy closeness (+1.68), acousticness match (+0.5)
-
-Sunrise City - Score: 2.06
-Because: energy closeness (+1.56), acousticness match (+0.5)
+Because: energy closeness (+1.68), acousticness match (+0.50)
 
 Neon Horizon - Score: 1.98
-Because: energy closeness (+1.48), acousticness match (+0.5)
+Because: energy closeness (+1.48), acousticness match (+0.50)
 
 Sunday Backroad - Score: 1.96
 Because: energy closeness (+1.96)
+
+Block Party Anthem - Score: 1.94
+Because: energy closeness (+1.44), acousticness match (+0.50)
 ```
 
-I asked for `reggae` and `euphoric`, neither of which exist anywhere in my catalog. The system didn't error out or flag anything, it just quietly dropped the genre and mood bonuses and ranked everything on energy and acousticness alone, still confidently returning 5 songs like nothing was wrong.
+I re-ran this profile under default weights specifically to keep the High-Energy Pop vs. Genre/Mood Ghost comparison below isolated to one variable (genre/mood match availability), since Genre/Mood Ghost itself now runs under mood-first mode for the main evaluation.
 
 ### Zero Energy Absolutist (adversarial — boundary value)
 
@@ -273,25 +298,27 @@ None of the adversarial profiles crashed the system or produced invalid scores. 
 
 ### Comparing Profiles
 
-**High-Energy Pop vs. Chill Lofi — opposite energy targets**
+**High-Energy Pop vs. Chill Lofi — opposite energy targets, different scoring modes**
 
-These two profiles ask for almost opposite things: High-Energy Pop wants `target_energy = 0.9`, Chill Lofi wants `target_energy = 0.35`. And that's exactly what happened, completely different songs won each one. Sunrise City (a high-energy pop track) topped High-Energy Pop at 5.34, while Library Rain (a mellow lofi track) topped Chill Lofi at 5.50. No overlap in the top 5 between the two lists at all. This is really just confirming the energy part of the scoring is doing its job in both directions, it's not secretly biased toward "high energy is always better," it rewards whatever's actually close to what the person asked for. The one small wrinkle: Chill Lofi's winner scored slightly higher (5.50 vs 5.34) because Library Rain's energy closeness bonus hit +2.00, basically a perfect match, while Sunrise City's was +1.84, a very good but not perfect match. So even between two "correct" results, small differences in how close a song's actual energy is to the target shift the final number.
+These two profiles ask for almost opposite things: High-Energy Pop wants `target_energy = 0.9` under default weights, Chill Lofi wants `target_energy = 0.35` under mood-first weights. Completely different songs won each one, with no overlap in the top 5 at all. Sunrise City (a high-energy pop track) topped High-Energy Pop at 5.34, while Library Rain (a mellow lofi track) topped Chill Lofi at 5.00. This still confirms the energy part of the scoring works in both directions, it's not secretly biased toward "high energy is always better," it rewards whatever's actually close to what the person asked for. The two scores aren't directly comparable this time though, since they're running under different weight schemes: Library Rain's energy closeness bonus is +1.00 under mood-first's lighter energy weighting, versus Sunrise City's +1.84 under default's heavier energy weighting. A cleaner apples-to-apples comparison would need both profiles on the same mode, this pairing mostly shows that both modes correctly reward whichever song best fits the stated preferences, just with different point totals along the way.
 
 **Deep Intense Rock vs. Sad Rave — same "intense" family, but Sad Rave contradicts itself**
 
-Both of these profiles are chasing a similar vibe on paper (rock-adjacent, high energy), but Sad Rave was built to be self-contradictory: it asks for metal + melancholic + energy 0.95, but also says the user likes acoustic music, which is an odd combination since intense, high-energy metal songs are rarely acoustic-leaning. You can see the difference in how cleanly each profile resolves. Deep Intense Rock has one song, Storm Runner, that satisfies genre, mood, and energy all at once, so it sweeps every bonus and wins big at 5.48, well ahead of the runner-up at 3.44. Sad Rave never finds a song like that, because no song in the catalog is simultaneously metal, melancholic, and acoustic-friendly. Instead the winner, Broken Amplifier, only picks up genre match (+2.0) and energy closeness (+2.00) for a total of 4.00, with no mood or acoustic credit at all. The system didn't fail or break, it just correctly reported that nothing in the catalog fully satisfies a set of preferences that don't fully agree with each other, so the "best" answer is a partial match rather than a perfect one.
+Both of these profiles are chasing a similar vibe on paper (rock-adjacent, high energy), but Sad Rave was built to be self-contradictory: it asks for metal + melancholic + energy 0.95, but also says the user likes acoustic music, which is an odd combination since intense, high-energy metal songs are rarely acoustic-leaning. Deep Intense Rock runs under energy-focused mode and has one song, Storm Runner, that satisfies genre, mood, and energy all at once, so it sweeps every bonus and wins big at 5.96, well ahead of the runner-up Gym Hero at 4.89. Sad Rave (also energy-focused) never finds a song like that, because no song in the catalog is simultaneously metal, melancholic, and acoustic-friendly. Instead the winner, Broken Amplifier, only picks up genre match (+1.00) and energy closeness (+3.50) for a total of 4.50, with no mood or acoustic credit at all. The system didn't fail or break, it just correctly reported that nothing in the catalog fully satisfies a set of preferences that don't fully agree with each other, so the "best" answer is a partial match rather than a perfect one.
 
 **High-Energy Pop vs. Genre/Mood Ghost — real matches vs. no matches at all**
 
-High-Energy Pop asks for `pop` and `happy`, both of which are real values in the catalog, so the top song can actually earn genre and mood credit on top of energy and acoustic credit, landing at 5.34. Genre/Mood Ghost asks for `reggae` and `euphoric`, neither of which exists anywhere in the data, so there is no possible way for any song to earn genre or mood points, no matter how good a fit it is otherwise. Its top song, Night Drive Loop, tops out at 2.20 using only energy closeness and acousticness. Two things stand out from comparing them. First, the ceiling is roughly cut in half when genre and mood can't contribute (5.34 vs. 2.20), which makes sense since those two bonuses are worth up to 3.0 of the total score. Second, look at how bunched together the Ghost results are: 2.20 down to 1.96 across the top 5, a spread of only 0.24. Compare that to High-Energy Pop's spread of 2.88 (5.34 down to 2.46). When genre and mood are in play, they do a lot of work separating "great fit" from "okay fit." When they're not in play, every song is only being judged on energy and acousticness, which vary a lot less from song to song, so everything ends up clustered close together instead of clearly ranked.
+To keep this comparison isolated to one variable (whether genre/mood can match at all, not which scoring mode is used), I'm comparing High-Energy Pop against the "Genre/Mood Ghost (default)" block above, both running under default weights. High-Energy Pop asks for `pop` and `happy`, both of which are real values in the catalog, so the top song can actually earn genre and mood credit on top of energy and acoustic credit, landing at 5.34. Genre/Mood Ghost asks for `reggae` and `euphoric`, neither of which exists anywhere in the data, so there is no possible way for any song to earn genre or mood points, no matter how good a fit it is otherwise. Its top song, Night Drive Loop, tops out at 2.20 using only energy closeness and acousticness. Two things stand out from comparing them. First, the ceiling is roughly cut in half when genre and mood can't contribute (5.34 vs. 2.20), which makes sense since those two bonuses are worth up to 3.0 of the total score under default weights. Second, look at how bunched together the Ghost results are: 2.20 down to 1.96 across the top 5, a spread of only 0.24. Compare that to High-Energy Pop's spread of 2.88 (5.34 down to 2.46). When genre and mood are in play, they do a lot of work separating "great fit" from "okay fit." When they're not in play, every song is only being judged on energy and acousticness, which vary a lot less from song to song, so everything ends up clustered close together instead of clearly ranked.
 
 **Why does Gym Hero keep showing up near the top, even for profiles that aren't asking for "intense"?**
 
 Gym Hero is tagged as a pop song with mood `intense`. It shows up as the #2 result for High-Energy Pop, a profile whose mood preference is `happy`, not `intense` at all. Here's the actual math from the terminal output that explains it:
 
-- **High-Energy Pop** (favorite_mood = "happy"): Gym Hero scores 4.44, built from genre match (+2.0), energy closeness (+1.94), and acousticness match (+0.5). Notice there's no mood bonus in that list at all, because "happy" doesn't match Gym Hero's actual mood of "intense." It still lands in 2nd place anyway.
-- **Deep Intense Rock** (favorite_mood = "intense"): Gym Hero scores 3.44, this time from mood match (+1.0), energy closeness (+1.94), and acousticness match (+0.5), but no genre match, because Gym Hero is tagged "pop," not "rock."
-- **Sad Rave**: Gym Hero scores only 1.96, from energy closeness alone, no genre, mood, or acoustic credit survives here.
+- **High-Energy Pop** (default, favorite_mood = "happy"): Gym Hero scores 4.44, built from genre match (+2.00), energy closeness (+1.94), and acousticness match (+0.50). Notice there's no mood bonus in that list at all, because "happy" doesn't match Gym Hero's actual mood of "intense." It still lands in 2nd place anyway.
+- **Deep Intense Rock** (energy-focused, favorite_mood = "intense"): Gym Hero scores 4.89, this time from mood match (+1.00), energy closeness (+3.40), and acousticness match (+0.50), but no genre match, because Gym Hero is tagged "pop," not "rock." The energy-focused weighting also pushes this score up much higher than it would be under default weights.
+- **Sad Rave** (energy-focused): Gym Hero scores only 3.43, from energy closeness alone, no genre, mood, or acoustic credit survives here.
+
+One extra thing this shows: since Deep Intense Rock and Sad Rave both use energy-focused weights, Gym Hero's score across all three profiles isn't just about which criteria match, it's also about which scoring mode is active. The same song's "just energy closeness" component is worth a lot more here (+3.40, +3.43) than it would be under default weights, which is part of why Gym Hero keeps surfacing near the top even when genre or mood don't line up.
 
 ### Logic Experiment: Weight Shift
 

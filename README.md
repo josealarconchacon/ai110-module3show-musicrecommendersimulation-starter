@@ -118,27 +118,27 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Sample Recommendation Output
 
-Default profile: `favorite_genre="pop", favorite_mood="happy", target_energy=0.8, likes_acoustic=False`
+Default profile: favorite_genre='pop', favorite_mood='happy', target_energy=0.9, likes_acoustic=False, mode='default'
 
 ```
 Loaded songs: 18
 
 Top recommendations:
 
-Sunrise City - Score: 5.46
-Because: genre match (+2.0), mood match (+1.0), energy closeness (+1.96), acousticness match (+0.5)
+Sunrise City - Score: 5.34
+Because: genre match (+2.00), mood match (+1.00), energy closeness (+1.84), acousticness match (+0.50)
 
-Gym Hero - Score: 4.24
-Because: genre match (+2.0), energy closeness (+1.74), acousticness match (+0.5)
+Gym Hero - Score: 4.44
+Because: genre match (+2.00), energy closeness (+1.94), acousticness match (+0.50)
 
-Rooftop Lights - Score: 3.42
-Because: mood match (+1.0), energy closeness (+1.92), acousticness match (+0.5)
+Rooftop Lights - Score: 3.22
+Because: mood match (+1.00), energy closeness (+1.72), acousticness match (+0.50)
 
-Night Drive Loop - Score: 2.40
-Because: energy closeness (+1.90), acousticness match (+0.5)
+Storm Runner - Score: 2.48
+Because: energy closeness (+1.98), acousticness match (+0.50)
 
-Neon Horizon - Score: 2.38
-Because: energy closeness (+1.88), acousticness match (+0.5)
+Block Party Anthem - Score: 2.46
+Because: energy closeness (+1.96), acousticness match (+0.50)
 ```
 
 **Screenshot or video** _(optional)_: <!-- Insert a screenshot or demo video link here -->
