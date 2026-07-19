@@ -91,7 +91,7 @@ On top of that, compound genre names lose all genre credit because matching is e
 
 Users whose taste maps cleanly onto exact genre/mood strings in the catalog get accurate results. Users whose taste is close but not exact (compound genres, adjacent moods) get quietly penalized without any indication that's what happened. And here's the part that makes it worse: the system never tells you when a requested genre or mood doesn't exist in the catalog at all, it just silently falls back to energy/acoustic scoring with no warning. So a "this genre doesn't exist in my catalog" result looks exactly the same as a "this genre exists but nothing scored high enough" result. A user has no way to tell the difference, which means the system can quietly fail a whole category of users without ever surfacing that it did.
 
-My catalog's genre distribution is extremely uneven, 12 of my 14 genres have exactly one song, while lofi has three. That means a user whose favorite genre is lofi gets three chances at a genre-match bonus, and two of those songs also match "chill" mood, stacking bonuses, while a user who likes classical or metal has exactly one shot, with zero fallback if that one song's mood or energy happens to be off. I initially thought there was also a genre "gap" in the energy scoring around target_energy=0.6, but checking my actual data, that turned out to be wrong, Sunday Backroad sits at energy 0.58, which is a near-perfect match for a target of 0.6. So the real bias isn't in the energy formula itself, it's entirely a catalog composition problem: users whose taste happens to align with lofi/chill are structurally better served than users who like any of the 12 singleton genres, regardless of how well the scoring math works.
+My catalog's genre distribution is extremely uneven, 13 of my 15 genres have exactly one song, while lofi has three. That means a user whose favorite genre is lofi gets three chances at a genre-match bonus, and two of those songs also match "chill" mood, stacking bonuses, while a user who likes classical or metal has exactly one shot, with zero fallback if that one song's mood or energy happens to be off. I initially thought there was also a genre "gap" in the energy scoring around target_energy=0.6, but checking my actual data, that turned out to be wrong, Sunday Backroad sits at energy 0.58, which is a near-perfect match for a target of 0.6. So the real bias isn't in the energy formula itself, it's entirely a catalog composition problem: users whose taste happens to align with lofi/chill are structurally better served than users who like any of the 13 singleton genres, regardless of how well the scoring math works.
 
 ---
 
@@ -328,7 +328,7 @@ I'd want the system to flag when a user's requested genre or mood doesn't exist 
 
 **Improving diversity among the top results**
 
-With 12 of my 14 genres having exactly one song, there's basically no alternative to offer once you're even slightly outside that one song's best-fit profile. I'd want a bigger, more evenly distributed catalog so users who like less common genres get real options instead of just whatever's closest on energy.
+With 13 of my 15 genres having exactly one song, there's basically no alternative to offer once you're even slightly outside that one song's best-fit profile. I'd want a bigger, more evenly distributed catalog so users who like less common genres get real options instead of just whatever's closest on energy.
 
 **Handling more complex user tastes**
 
