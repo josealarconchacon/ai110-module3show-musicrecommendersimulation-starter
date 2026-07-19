@@ -64,34 +64,48 @@ def load_songs(csv_path: str) -> List[Dict]:
             songs.append(row)
     return songs
 
-def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
+@dataclass(frozen=True)
+class ScoringWeights:
+    """Weights used by score_song for each scoring component."""
+    genre: float
+    mood: float
+    energy: float
+    acoustic: float
+
+SCORING_MODES: Dict[str, ScoringWeights] = {
+    "default": ScoringWeights(genre=2.0, mood=1.0, energy=2.0, acoustic=0.5),
+    "mood-first": ScoringWeights(genre=1.0, mood=2.5, energy=1.0, acoustic=0.5),
+    "energy-focused": ScoringWeights(genre=1.0, mood=1.0, energy=3.5, acoustic=0.5),
+}
+
+def score_song(user_prefs: Dict, song: Dict, weights: ScoringWeights = SCORING_MODES["default"]) -> Tuple[float, List[str]]:
     """Computes a match score and list of reasons for a song against a user's preferences."""
     total_score = 0.0
     reasons = []
 
     if song["genre"] == user_prefs["favorite_genre"]:
-        total_score += 2.0
-        reasons.append("genre match (+2.0)")
+        total_score += weights.genre
+        reasons.append(f"genre match (+{weights.genre:.2f})")
 
     if song["mood"] == user_prefs["favorite_mood"]:
-        total_score += 1.0
-        reasons.append("mood match (+1.0)")
+        total_score += weights.mood
+        reasons.append(f"mood match (+{weights.mood:.2f})")
 
-    energy_points = (1 - abs(user_prefs["target_energy"] - song["energy"])) * 2.0
+    energy_points = (1 - abs(user_prefs["target_energy"] - song["energy"])) * weights.energy
     if energy_points > 0:
         total_score += energy_points
         reasons.append(f"energy closeness (+{energy_points:.2f})")
 
     if user_prefs["likes_acoustic"] == (song["acousticness"] > 0.5):
-        total_score += 0.5
-        reasons.append("acousticness match (+0.5)")
+        total_score += weights.acoustic
+        reasons.append(f"acousticness match (+{weights.acoustic:.2f})")
 
     return (total_score, reasons)
 
-def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
+def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5, weights: ScoringWeights = SCORING_MODES["default"]) -> List[Tuple[Dict, float, str]]:
     """Scores every song against user preferences and picks the top k one at a time,
     applying a diversity penalty to remaining songs whose artist is already represented."""
-    candidates = [[song, *score_song(user_prefs, song), False] for song in songs]
+    candidates = [[song, *score_song(user_prefs, song, weights), False] for song in songs]
     results = []
     chosen_artists = set()
 
