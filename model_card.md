@@ -45,7 +45,7 @@ I started with genre worth more than mood, and I wanted to test that before chan
 
 My catalog has 18 songs total, I started with 10 and added 8 more later to get more variety. Each song has genre, mood, energy, tempo, valence, danceability, and acousticness, but I only score on four of those: genre, mood, energy, and acousticness.
 
-Genre-wise it's pretty spread out, 15 different genres across 18 songs (pop, lofi, rock, ambient, jazz, synthwave, indie pop, classical, hip hop, r&b, folk, electronic, ambient pop, metal, country). Only lofi has more than one song in most cases, it's got three (Midnight Coding, Library Rain, Focus Flow). Everything else is basically a single song representing that whole genre.
+Genre-wise it's pretty spread out, 15 different genres across 18 songs (pop, lofi, rock, ambient, jazz, synthwave, indie pop, classical, hip hop, r&b, folk, electronic, ambient pop, metal, country). Two genres have more than one song, lofi has three (Midnight Coding, Library Rain, Focus Flow) and pop has two (Sunrise City, Gym Hero). Everything else is a single song representing that whole genre.
 
 Moods are similar, chill shows up the most (three songs), everything else is one or two songs at most.
 
