@@ -39,6 +39,7 @@ class Recommender:
         self.songs = songs
 
     def recommend(self, user: UserProfile, k: int = 5) -> List[Song]:
+        """Returns the top k songs recommended for the given user profile."""
         user_dict = asdict(user)
         song_dicts = [asdict(song) for song in self.songs]
         results = recommend_songs(user_dict, song_dicts, k)
@@ -47,6 +48,7 @@ class Recommender:
         return [songs_by_id[scored_song["id"]] for scored_song, _score, _reasons in results]
 
     def explain_recommendation(self, user: UserProfile, song: Song) -> str:
+        """Returns a human-readable explanation of why a song matches a user's preferences."""
         user_dict = asdict(user)
         song_dict = asdict(song)
         _score, reasons = score_song(user_dict, song_dict)
@@ -103,8 +105,7 @@ def score_song(user_prefs: Dict, song: Dict, weights: ScoringWeights = SCORING_M
     return (total_score, reasons)
 
 def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5, weights: ScoringWeights = SCORING_MODES["default"]) -> List[Tuple[Dict, float, str]]:
-    """Scores every song against user preferences and picks the top k one at a time,
-    applying a diversity penalty to remaining songs whose artist is already represented."""
+    """Scores every song against user preferences and picks the top k, applying a diversity penalty for repeated artists."""
     candidates = [[song, *score_song(user_prefs, song, weights), False] for song in songs]
     results = []
     chosen_artists = set()
